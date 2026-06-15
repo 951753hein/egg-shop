@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="my">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="မိခင်အတွက် ကြက်ဥ စျေးနှုန်း တွက်ချက်ခြင်း">
+  <meta name="theme-color" content="#7A3F00">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ကြက်ဥ">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%237A3F00' width='192' height='192'/><text x='96' y='110' font-size='120' text-anchor='middle' fill='%23F2E6D0'>🥚</text></svg>">
+  <title>ကြက်ဥ Calculator</title>
+  <style>
+    :root{
+      --bg:#F2E6D0; /* slightly darker cream for contrast */
+      --card:#F3D9B8; /* warmer, slightly darker card */
+      --accent:#C07A00; /* golden (darker) */
+      --accent-dark:#7A3F00; /* richer brown */
+      --text:#2f2622; /* darker text */
+      --radius:12px;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;padding:20px;background:var(--bg);color:var(--text);font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Myanmar", "Myanmar3", sans-serif; -webkit-font-smoothing:antialiased;
+      font-size:20px; /* minimum */
+      line-height:1.3;
+      -webkit-user-select:none; /* easier tapping */
+    }
+    .container{max-width:720px;margin:0 auto}
+    header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    header h1{font-size:28px;margin:0;color:var(--accent-dark)}
+
+    .card{background:var(--card);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:0 6px 18px rgba(138,75,0,0.06)}
+    label{display:block;margin-bottom:8px;font-size:20px}
+    input[type=text], input[type=number], select{width:100%;padding:16px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);font-size:20px;background:white;box-sizing:border-box}
+    .options{display:flex;flex-wrap:wrap;gap:8px}
+    .option-btn{flex:1 1 calc(33% - 8px);min-width:80px;padding:12px;border-radius:10px;text-align:center;background:transparent;border:2px solid transparent;font-size:20px;color:var(--accent-dark)}
+    .option-btn.selected{background:var(--accent);color:white;border-color:var(--accent-dark)}
+
+    button{display:inline-block;padding:14px 18px;border-radius:12px;background:var(--accent-dark);color:white;border:none;font-size:22px;font-weight:700;width:100%}
+
+    .output{background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,250,240,0.8));padding:18px;border-radius:12px;text-align:center;margin-top:12px}
+    .out-line{font-size:26px;font-weight:800;color:var(--accent-dark);margin:6px 0}
+    .muted{font-size:16px;color:#6b564f}
+
+    .admin-toggle{margin-top:8px;text-align:right}
+    .admin-panel{margin-top:12px}
+    .small-btn{background:#fff;border:2px solid var(--accent);color:var(--accent-dark);padding:8px 10px;border-radius:10px;font-weight:700;font-size:18px}
+
+    footer{margin-top:18px;text-align:center;color:#6b564f;font-size:16px}
+
+    @media (max-width:420px){
+      body{padding:12px;font-size:20px}
+      header h1{font-size:24px}
+      .out-line{font-size:22px}
+      button{font-size:20px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>ကြက်ဥ Calculator</h1>
+    </header>
+
+    <main>
+      <section class="card">
+        <label>စုစုပေါင်းအလေးချိန် (kg)</label>
+        <input id="total-weight" type="text" inputmode="decimal" placeholder="ဥပမာ 25.5">
+      </section>
+
+      <section class="card">
+        <label>ကဒ်အရေအတွက်</label>
+        <input id="card-count" type="text" inputmode="decimal" placeholder="ဥပမာ 5">
+      </section>
+
+      <section class="card">
+        <label>ကဒ်ခွံအလေးချိန် (တစ်ခု)</label>
+        <div class="options" id="card-weight-options">
+          <button class="option-btn" data-value="0.15">0.15kg</button>
+          <button class="option-btn" data-value="0.16">0.16kg</button>
+          <button class="option-btn" data-value="0.17">0.17kg</button>
+          <button class="option-btn selected" data-value="0.18">0.18kg</button>
+          <button class="option-btn" data-value="0.20">0.20kg</button>
+          <button class="option-btn" data-value="0.22">0.22kg</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <button id="calc-btn">တွက်ချက်ရန်</button>
+
+        <div class="output" aria-live="polite">
+          <div class="out-line">စုစုပေါင်း ကျသင့်ငွေ: <span id="total-cost">— ကျပ်</span></div>
+          <div class="out-line">ပျမ်းမျှ တစ်လုံးစျေး: <span id="avg-per-egg">— ကျပ်</span></div>
+        </div>
+      </section>
+
+      <div class="admin-toggle">
+        <button id="show-admin" class="small-btn">Admin</button>
+      </div>
+
+      <section class="card admin-panel" id="admin-panel" style="display:none">
+        <label>Admin (စကားဝှက်လိုအပ်ပါသည်)</label>
+        <div style="display:flex;gap:8px;margin-bottom:10px">
+          <input id="admin-password" type="password" placeholder="စကားဝှက်">
+          <button id="admin-login" class="small-btn">ဝင်ရောက်ရန်</button>
+        </div>
+
+        <div id="admin-area" style="display:none">
+          <label>၁ ကဒ်စျေး (၁-၃ ကဒ်)</label>
+          <input id="price-one" type="number" step="1" min="0">
+          <div class="muted">နောက်ဆုံးပြင်ဆင်သည့်အချိန်: <span id="price-one-time">—</span></div>
+
+          <label style="margin-top:10px">၅ ကဒ်စျေး (၄-၈ ကဒ်)</label>
+          <input id="price-five" type="number" step="1" min="0">
+          <div class="muted">နောက်ဆုံးပြင်ဆင်သည့်အချိန်: <span id="price-five-time">—</span></div>
+
+          <label style="margin-top:10px">၁၀ ကဒ်စျေး (၉ ကဒ်နဲ့အထက်)</label>
+          <input id="price-ten" type="number" step="1" min="0">
+          <div class="muted">နောက်ဆုံးပြင်ဆင်သည့်အချိန်: <span id="price-ten-time">—</span></div>
+
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button id="save-prices" class="small-btn">သိမ်းမည်</button>
+            <button id="logout" class="small-btn" style="background:white;color:var(--accent);border-color:var(--accent)">ထွက်မည်</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <div>@pyaephyoehein</div>
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      // Keys
+      const KEY_ONE = 'price_one_card';
+      const KEY_FIVE = 'price_five_cards';
+      const KEY_TEN = 'price_ten_cards';
+      const KEY_TIME_ONE = 'price_one_time';
+      const KEY_TIME_FIVE = 'price_five_time';
+      const KEY_TIME_TEN = 'price_ten_time';
+
+      // Elements
+      const totalWeightEl = document.getElementById('total-weight');
+      const cardCountEl = document.getElementById('card-count');
+      const options = document.getElementById('card-weight-options');
+      const calcBtn = document.getElementById('calc-btn');
+      const totalCostEl = document.getElementById('total-cost');
+      const avgPerEggEl = document.getElementById('avg-per-egg');
+
+      const showAdminBtn = document.getElementById('show-admin');
+      const adminPanel = document.getElementById('admin-panel');
+      const adminLoginBtn = document.getElementById('admin-login');
+      const adminPassword = document.getElementById('admin-password');
+      const adminArea = document.getElementById('admin-area');
+      const priceOne = document.getElementById('price-one');
+      const priceFive = document.getElementById('price-five');
+      const priceTen = document.getElementById('price-ten');
+      const savePricesBtn = document.getElementById('save-prices');
+      const logoutBtn = document.getElementById('logout');
+      const priceOneTime = document.getElementById('price-one-time');
+      const priceFiveTime = document.getElementById('price-five-time');
+      const priceTenTime = document.getElementById('price-ten-time');
+
+      // default prices
+      const DEFAULT_ONE = 600; // per kg for 1-3 cards (example)
+      const DEFAULT_FIVE = 580; // per kg for 4-8
+      const DEFAULT_TEN = 560; // per kg for 9+
+
+      // card weight selection
+      let selectedCardWeight = 0.18;
+      options.addEventListener('click', function(e){
+        const btn = e.target.closest('.option-btn');
+        if(!btn) return;
+        Array.from(options.querySelectorAll('.option-btn')).forEach(b=>b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedCardWeight = parseFloat(btn.dataset.value);
+      });
+
+      // load prices from localStorage
+      function loadPrices(){
+        const one = Number(localStorage.getItem(KEY_ONE) || DEFAULT_ONE);
+        const five = Number(localStorage.getItem(KEY_FIVE) || DEFAULT_FIVE);
+        const ten = Number(localStorage.getItem(KEY_TEN) || DEFAULT_TEN);
+        priceOne.value = one;
+        priceFive.value = five;
+        priceTen.value = ten;
+
+        priceOneTime.textContent = localStorage.getItem(KEY_TIME_ONE) || '—';
+        priceFiveTime.textContent = localStorage.getItem(KEY_TIME_FIVE) || '—';
+        priceTenTime.textContent = localStorage.getItem(KEY_TIME_TEN) || '—';
+
+        return {one,five,ten};
+      }
+
+      // get kilo price based on card count
+      function getKiloPrice(cards){
+        const one = Number(localStorage.getItem(KEY_ONE) || DEFAULT_ONE);
+        const five = Number(localStorage.getItem(KEY_FIVE) || DEFAULT_FIVE);
+        const ten = Number(localStorage.getItem(KEY_TEN) || DEFAULT_TEN);
+        if(cards >= 9) return ten;
+        if(cards >= 4) return five;
+        return one;
+      }
+
+      function formatCurrency(n){
+        if(isNaN(n) || !isFinite(n)) return '— ကျပ်';
+        // round to nearest kyat
+        const v = Math.round(n);
+        return v.toLocaleString('en-US') + ' ကျပ်';
+      }
+
+      calcBtn.addEventListener('click', function(){
+        const totalWeight = parseFloat(totalWeightEl.value) || 0;
+        const cards = parseInt(cardCountEl.value) || 0;
+        const cardW = parseFloat(selectedCardWeight) || 0;
+
+        if(cards <= 0){
+          totalCostEl.textContent = 'ကဒ်အရေအတွက်ထည့်ပါ';
+          avgPerEggEl.textContent = '—';
+          return;
+        }
+
+        const kiloPrice = getKiloPrice(cards);
+        // remaining weight after removing card shells
+        let meatWeight = totalWeight - (cardW * cards);
+        if(meatWeight < 0) meatWeight = 0;
+
+        const totalCost = meatWeight * kiloPrice;
+        const avg = (cards * 30) > 0 ? (totalCost / (cards * 30)) : 0;
+
+        totalCostEl.textContent = formatCurrency(totalCost);
+        avgPerEggEl.textContent = formatCurrency(avg);
+      });
+
+      // Admin
+      showAdminBtn.addEventListener('click', ()=>{
+        adminPanel.style.display = adminPanel.style.display === 'none' ? 'block' : 'none';
+      });
+
+      adminLoginBtn.addEventListener('click', function(){
+        const pass = adminPassword.value || '';
+        if(pass === '724'){
+          adminArea.style.display = 'block';
+          adminPassword.value = '';
+          loadPrices();
+        } else {
+          alert('စကားဝှက် မမှန်ပါ');
+        }
+      });
+
+      savePricesBtn.addEventListener('click', function(){
+        const one = Number(priceOne.value) || DEFAULT_ONE;
+        const five = Number(priceFive.value) || DEFAULT_FIVE;
+        const ten = Number(priceTen.value) || DEFAULT_TEN;
+        localStorage.setItem(KEY_ONE, one);
+        localStorage.setItem(KEY_FIVE, five);
+        localStorage.setItem(KEY_TEN, ten);
+        const now = new Date().toLocaleString();
+        localStorage.setItem(KEY_TIME_ONE, now);
+        localStorage.setItem(KEY_TIME_FIVE, now);
+        localStorage.setItem(KEY_TIME_TEN, now);
+        priceOneTime.textContent = now;
+        priceFiveTime.textContent = now;
+        priceTenTime.textContent = now;
+        alert('စျေးနှုန်းများ သိမ်းပြီးပါပြီ');
+      });
+
+      logoutBtn.addEventListener('click', function(){
+        adminArea.style.display = 'none';
+        adminPanel.style.display = 'none';
+      });
+
+      // initialize
+      (function init(){
+        // ensure selected button reflects initial weight
+        selectedCardWeight = 0.18;
+        loadPrices();
+      })();
+
+    })();
+  </script>
+
+  <script>
+    // Register Service Worker for offline support
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then((registration) => {
+            console.log('Service Worker registered successfully:', registration);
+          })
+          .catch((err) => {
+            console.warn('Service Worker registration failed:', err);
+          });
+      });
+    }
+  </script>
+</body>
+</html>
