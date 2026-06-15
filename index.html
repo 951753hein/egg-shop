@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="my">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ဦးမြင့်ဝေ ဘဲဥကြက်ဥ</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero-section">
+    <img src="logo.png" alt="logo" class="logo" onerror="this.style.display='none'">
+  </header>
+
+  <nav class="tabs">
+    <a class="tab" href="#retail">လက်လီ</a>
+    <a class="tab" href="#wholesale">လက်ကား</a>
+    <a class="tab" href="#contact">ဆက်သွယ်ရန်</a>
+  </nav>
+
+  <main>
+    <section id="retail" class="panel">
+      <h2>လက်လီ</h2>
+      <div class="products">
+        <div class="card">
+          <img src="chicken.png" alt="ကြက်ဥ" onerror="this.style.display='none'">
+          <h3>ကြက်ဥ</h3>
+          <ul class="prices" id="chicken-prices">
+            <li>အကြီး: <span data-key="chicken_large">— ကျပ်</span></li>
+            <li>အလတ်: <span data-key="chicken_medium">— ကျပ်</span></li>
+            <li>အသေး: <span data-key="chicken_small">— ကျပ်</span></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <img src="duck.png" alt="ဘဲဥ" onerror="this.style.display='none'">
+          <h3>ဘဲဥ</h3>
+          <ul class="prices" id="duck-prices">
+            <li>အကြီး: <span data-key="duck_large">— ကျပ်</span></li>
+            <li>အလတ်: <span data-key="duck_medium">— ကျပ်</span></li>
+            <li>အသေး: <span data-key="duck_small">— ကျပ်</span></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <img src="century.png" alt="ဆေးဘဲဥ" onerror="this.style.display='none'">
+          <h3>ဆေးဘဲဥ</h3>
+          <ul class="prices" id="century-prices">
+            <li>တစ်လုံး: <span data-key="century_per_egg">— ကျပ်</span></li>
+            <li>တစ်ဖာ: <span data-key="century_per_box">— ကျပ်</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="wholesale" class="panel">
+      <h2>လက်ကား</h2>
+      <div class="market">
+        <label>ယနေ့ ပေါက်စျေး: 1kg = <span id="market-price">— ကျပ်</span></label>
+      </div>
+
+      <div class="calculator">
+        <h3>ကျသင့်ငွေ တွက်ချက်ခြင်း</h3>
+        <label>စုစုပေါင်း အလေးချိန် (kg)
+          <input type="number" step="0.01" id="calc-weight" placeholder="0.00">
+        </label>
+
+        <div class="card-size">
+          <label><input type="radio" name="cardSize" value="0.18" checked> ကဒ်သေး (0.18kg)</label>
+          <label><input type="radio" name="cardSize" value="0.22"> ကဒ်ကြီး (0.22kg)</label>
+        </div>
+
+        <label>ကဒ်ပေါင်း
+          <input type="number" id="calc-cards" value="0" min="0">
+        </label>
+
+        <button id="calc-btn">တွက်ချက်မည်</button>
+
+        <div class="calc-results">
+          <p>စုစုပေါင်း ကုန်ကျစရိတ်: <span id="total-cost">— ကျပ်</span></p>
+          <p>ပျမ်းမျှ တစ်လုံးစျေး: <span id="avg-per-egg">— ကျပ်</span></p>
+        </div>
+      </div>
+
+      <div class="duck-wholesale">
+        <h3>ဘဲဥ လက်ကား</h3>
+        <ul>
+          <li>20kg ဝိတ်တန်း = <span id="duck-20kg">— ကျပ်</span></li>
+          <li>21kg ဝိတ်တန်း = <span id="duck-21kg">— ကျပ်</span></li>
+          <li>23kg ဝိတ်တန်း= <span id="duck-23kg">— ကျပ်</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="contact" class="panel">
+      <h2>ဆက်သွယ်ရန်</h2>
+      <p>လိပ်စာ: အိမ်အမှတ် (၁၇)၊ ရွှေမြိုင်သီရိ(၆)လမ်း၊ ဒိုက်ဝန်ကွင်းရပ်၊ မော်လမြိုင်..</p>
+      <a class="contact-phone" href="tel:09796539666">09796539666</a>
+      <p>ဆိုင်ဖွင့်ချိန်: မနက် ၆:၀၀ - ညနေ ၈:၀၀</p>
+    </section>
+  </main>
+
+  <footer>
+    <small>© ဦးမြင့်ဝေ ဘဲဥကြက်ဥ</small>
+    <a href="admin.html" class="admin-link">Admin</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

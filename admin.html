@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="my">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin - ဦးမြင့်ဝေ ဘဲဥကြက်ဥ</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>main{max-width:900px;margin:12px auto;padding:12px} .field{margin:8px 0} label{display:block;font-weight:600;margin-bottom:6px}</style>
+</head>
+<body>
+  <header class="hero">
+    <h1 class="bizname">Admin Panel</h1>
+  </header>
+  <main>
+    <div id="login">
+      <label>Password</label>
+      <input type="password" id="admin-pass">
+      <button id="login-btn">Login</button>
+    </div>
+
+    <div id="panel" style="display:none">
+      <h2>လက်လီ စျေးနှုန်းများ</h2>
+      <div class="field">
+        <label>ကြက်ဥ - ကြီး</label>
+        <input type="number" id="chicken_large">
+      </div>
+      <div class="field">
+        <label>ကြက်ဥ - အလယ်</label>
+        <input type="number" id="chicken_medium">
+      </div>
+      <div class="field">
+        <label>ကြက်ဥ - သေး</label>
+        <input type="number" id="chicken_small">
+      </div>
+
+      <h3>ဘဲဥ (လက်လီ)</h3>
+      <div class="field"><label>ဘဲဥ - ကြီး</label><input type="number" id="duck_large"></div>
+      <div class="field"><label>ဘဲဥ - အလယ်</label><input type="number" id="duck_medium"></div>
+      <div class="field"><label>ဘဲဥ - သေး</label><input type="number" id="duck_small"></div>
+
+      <h3>ဆေးဘဲဥ</h3>
+      <div class="field"><label>တစ်လုံး</label><input type="number" id="century_per_egg"></div>
+      <div class="field"><label>တစ်ဘူး</label><input type="number" id="century_per_box"></div>
+
+      <h2>လက်ကား ပြဿနာများ</h2>
+      <div class="field"><label>Market price (1kg)</label><input type="number" id="market_price_per_kg"></div>
+      <h3>ဘဲဥ လက်ကား</h3>
+      <div class="field"><label>20kg</label><input type="number" id="duck_20kg"></div>
+      <div class="field"><label>21kg</label><input type="number" id="duck_21kg"></div>
+      <div class="field"><label>23kg</label><input type="number" id="duck_23kg"></div>
+
+      <div style="margin-top:12px">
+        <button id="save-btn">Save</button>
+        <button id="logout-btn">Logout</button>
+        <div id="msg" style="display:inline-block;margin-left:12px"></div>
+      </div>
+    </div>
+  </main>
+  <script src="admin.js"></script>
+</body>
+</html>
