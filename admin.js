@@ -1,4 +1,4 @@
-const PASS = 'admin123';
+const PASS = '0524';
 const loginBtn = document.getElementById('login-btn');
 const panel = document.getElementById('panel');
 const loginDiv = document.getElementById('login');
